@@ -1,0 +1,43 @@
+version: '3.5'
+services:
+  nginx:
+    image: nginx:latest
+    # 端口映射
+    ports:
+      - "80:80"
+    # 依赖关系 先跑php
+    privileged: true
+    depends_on:
+      - "php"
+      - "php8"
+
+    # 数据卷
+    volumes:
+      - ${WORK_DIR}/docker/nginx/conf.d:/etc/nginx/conf.d
+      - ${WORK_DIR}/docker/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ${WORK_DIR}/docker/nginx/logs:/var/log/nginx
+      - ${WORK_DIR}:/var/www/html
+
+    # 容器名称
+    container_name: "work-nginx"
+    restart: always
+
+  php:
+    build: ./php/7.2
+    volumes:
+      - ${WORK_DIR}:/var/www/html
+    ports:
+      - 9000:9000
+    image: work_php_7.2
+    container_name: "work-php7.2"
+    restart: always
+
+  php8:
+    build: ./php/8
+    volumes:
+      - ${WORK_DIR}:/var/www/html
+    ports:
+      - 9011:9000
+    image: work_php_8
+    container_name: "work-php8"
+    restart: always
