@@ -13,9 +13,9 @@ services:
 
     # 数据卷
     volumes:
-      - ${WORK_DIR}/docker/nginx/conf.d:/etc/nginx/conf.d
-      - ${WORK_DIR}/docker/nginx/nginx.conf:/etc/nginx/nginx.conf
-      - ${WORK_DIR}/docker/nginx/logs:/var/log/nginx
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/logs:/var/log/nginx
       - ${WORK_DIR}:/var/www/html
 
     # 容器名称
